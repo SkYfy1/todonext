@@ -1,7 +1,13 @@
 "use client";
 
 import toDoService from "@/services/toDoService";
-import React, { useCallback, useEffect, useOptimistic, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useOptimistic,
+  useRef,
+  useState,
+} from "react";
 import ToDoItem from "./ToDoItem";
 import { Input } from "./ui/input";
 
@@ -9,6 +15,7 @@ const ToDoContainer = () => {
   const [toDos, setTodos] = useState<Todo[] | null>(null);
   const [text, setText] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const ref = useRef(null);
 
   const [optimisticTodos, addOptimisticTodos] = useOptimistic(
     toDos,
@@ -51,6 +58,7 @@ const ToDoContainer = () => {
     };
 
     addOptimisticTodos(newToDo);
+    ref.current.scrollIntoView();
 
     try {
       await toDoService.addTodo(newToDo);
@@ -88,7 +96,7 @@ const ToDoContainer = () => {
   }
 
   return (
-    <div className="flex justify-center items-center flex-col gap-6 p-6">
+    <div className="flex justify-center items-center flex-col gap-6 p-6 relative">
       <h1 className="text-3xl font-semibold">To Do List</h1>
       <form action={handleAddTodo} className="flex w-full gap-4 items-center">
         <Input
@@ -101,7 +109,7 @@ const ToDoContainer = () => {
           Add
         </button>
       </form>
-      <div className="flex flex-col gap-4 overflow-auto">
+      <div className="flex flex-col gap-4 h-[724] overflow-auto no-scrollbar">
         {optimisticTodos?.map((todo, index) => (
           <ToDoItem
             key={todo.sending ? `temp-${index}` : todo.id}
@@ -110,6 +118,7 @@ const ToDoContainer = () => {
             updateTodo={handleUpdateTodoState}
           />
         ))}
+        <div ref={ref} className="mt-15"></div>
       </div>
     </div>
   );
