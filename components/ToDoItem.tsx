@@ -13,7 +13,10 @@ const ToDoItem = ({
   return (
     <div className="flex justify-between items-center gap-2 p-4 border-white border w-full rounded-md">
       <div
-        className={cn("flex gap-10", data.completed && "line-through")}
+        className={cn(
+          "flex gap-10 cursor-pointer",
+          data.completed && "line-through"
+        )}
         onClick={() => updateTodo(data.id)}
       >
         {data.title} {!!data.sending && <div>{data.todo.title} Sending...</div>}
