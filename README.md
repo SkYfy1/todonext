@@ -6,7 +6,19 @@ Axios
 
 ## Getting Started
 
-First, run the development server:
+Copy repository: 
+```bash
+git clone https://github.com/SkYfy1/todonext.git
+cd todonext
+```
+
+Install dependencies:
+
+```bash
+npm i
+```
+
+Start project:
 
 ```bash
 npm run dev
