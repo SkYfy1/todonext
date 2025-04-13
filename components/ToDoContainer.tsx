@@ -29,6 +29,7 @@ const ToDoContainer = () => {
   );
 
   useEffect(() => {
+    let ignore = false;
     const fetchTodos = async () => {
       setIsLoading(true);
       try {
@@ -37,7 +38,9 @@ const ToDoContainer = () => {
         // Simulating long fetch
         await new Promise((res) => setTimeout(() => res(""), 1000));
 
+        if(ignore) {
         setTodos(data);
+        }
       } catch (error) {
         console.log(error);
       } finally {
@@ -45,6 +48,9 @@ const ToDoContainer = () => {
       }
     };
     fetchTodos();
+    return () => {
+          ignore = true;
+    }
   }, []);
 
   const handleAddTodo = async () => {
