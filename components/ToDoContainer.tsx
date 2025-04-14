@@ -38,8 +38,8 @@ const ToDoContainer = () => {
         // Simulating long fetch
         await new Promise((res) => setTimeout(() => res(""), 1000));
 
-        if(ignore) {
-        setTodos(data);
+        if (!ignore) {
+          setTodos(data);
         }
       } catch (error) {
         console.log(error);
@@ -49,8 +49,8 @@ const ToDoContainer = () => {
     };
     fetchTodos();
     return () => {
-          ignore = true;
-    }
+      ignore = true;
+    };
   }, []);
 
   const handleAddTodo = async () => {
